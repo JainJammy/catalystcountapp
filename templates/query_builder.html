@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Query Builder</h1>
+    <p>Result count should be returned by an API made using Django Rest Framework</p>
+    <div class="card">
+        <div class="card-header">Query Builder</div>
+        <div class="card-body">
+            <form id="query-form">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="keyword">Keyword</label>
+                        <input type="text" class="form-control" id="keyword" name="keyword">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="industry">Industry</label>
+                        <input type="text" class="form-control" id="industry" name="industry">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="year_founded">Year Founded</label>
+                        <input type="number" class="form-control" id="year_founded" name="year_founded">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" name="city">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" name="state">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" name="country">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="employees_from">Employees (From)</label>
+                        <input type="number" class="form-control" id="employees_from" name="employees_from">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="employees_to">Employees (To)</label>
+                        <input type="number" class="form-control" id="employees_to" name="employees_to">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="queryData()">Query Data</button>
+            </form>
+            <br>
+            <div id="result-count" class="alert alert-info" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function queryData() {
+    var form = document.getElementById('query-form');
+    var formData = new FormData(form);
+    var queryString = new URLSearchParams(formData).toString();
+
+    fetch('/api/query_companies/?' + queryString)
+        .then(response => response.json())
+        .then(data => {
+            var resultCount = document.getElementById('result-count');
+            resultCount.innerText = `${data.count} records found for the query`;
+            resultCount.style.display = 'block';
+        })        .catch(error => {
+            alert("Something went wrong")
+        });
+;
+}
+</script>
+{% endblock %}
