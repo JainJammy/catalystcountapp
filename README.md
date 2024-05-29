@@ -41,6 +41,4 @@ python manage.py runserver
 
 1. After running python manage.py runserver click on signup create your user then click on sign in you will redirected to login page  
 
-2. Once you clone the repositiory you need to change the directory command is cd catalystcount
-
-
+2. You can use my login credentials to login the application email id jainjammy344@gmail.com password JammyJain
