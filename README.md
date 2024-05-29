@@ -20,6 +20,11 @@ users delete users.
 - django-allauth
 - django-environ
 
+
+## Django Tempaltes
+
+--using django templates for UI we can use React JS / Next JS typescript and backend as django rest framework
+
 ## To Use Postgre SQL
 
 - you can go to settings.py and provide the host name port in database to setup with Postegre SQL by default using DB Sqlite 3
