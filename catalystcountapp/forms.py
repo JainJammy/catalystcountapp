@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SignupForm
 from django import forms
+from .models import UploadedFile
 """creating sign up form"""
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=30, required=True, label='First Name')
@@ -28,8 +29,11 @@ class CustomSignupForm(SignupForm):
         user.save()
         return user
 """creating upload file form"""    
-class UploadFileForm(forms.Form):
-    file = forms.FileField(label='Select File')
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = UploadedFile
+        fields = ['file']
+
 
 """creating add users form"""
 class AddUserForm(forms.ModelForm):

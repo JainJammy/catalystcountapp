@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .forms import UploadFileForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Company
+from .models import Company,UploadedFile
 from .forms import AddUserForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
@@ -18,17 +18,19 @@ def home(request):
 def homepagedata(request):
     """Home Page Template to render"""
     return render(request,"homepageshow.html")
-def handle_uploaded_file(f, filename):
+def handle_uploaded_file(file):
     """This function is responsible for file data handle"""
-    with open(filename, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
+    #saving the file in database instead of file handling read write concept
+    uploaded_file=UploadedFile(file=file)
+    uploaded_file.save()
 """upload file view function"""            
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['file'], os.path.join('uploads', request.FILES['file'].name))
+            #handle_uploaded_file(request.FILES['file'], os.path.join('uploads', request.FILES['file'].name))
+            ##no requirement to pass os.pasth.join uploadf,request.FILES['file'].name as we are saving file in database in upload file mode upload/  it will save
+            handle_uploaded_file(request.FILES['file'])
             return JsonResponse({'message': 'File uploaded successfully'})
     else:
         form = UploadFileForm()

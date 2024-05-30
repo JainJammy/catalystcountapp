@@ -39,3 +39,6 @@ class Company(models.Model):
     state = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     employees = models.IntegerField(null=True, blank=True)
+class UploadedFile(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
